@@ -156,6 +156,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //added
+        JD\Cloudder\CloudderServiceProvider::class,
+        Unicodeveloper\Mention\MentionServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
     ],
 
     /*
@@ -201,6 +206,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        //added
+        'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
 
     ],
 
