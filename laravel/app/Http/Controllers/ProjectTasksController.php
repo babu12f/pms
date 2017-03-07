@@ -73,12 +73,9 @@ class ProjectTasksController extends Controller
      */
     public function deleteOneProjectTask($projectId, $taskId)
     {
-        DB::table('tasks')
-            ->where('project_id', $projectId)
-            ->where('id', $taskId)
-            ->delete();
+        Task::where('id', $taskId)->where('project_id', $projectId)->delete();
 
-        return redirect()->route('projects.show')->with('info', 'Task deleted successfully');
+        return ['msg'=>'success'];
     }
 
 }

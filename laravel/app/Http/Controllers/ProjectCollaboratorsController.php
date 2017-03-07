@@ -76,14 +76,13 @@ class ProjectCollaboratorsController extends Controller
     public function deleteCollaborator($projectId, $collaborationId)
     {
         //DB::enableQueryLog();
-        //dd('babor');
+        //dd(DB::getQueryLog());
+
         Collaboration::where('id', $collaborationId)->where('project_id', $projectId)->delete();
 
-        //dd(DB::getQueryLog());
-            //->delete();
-
         //return redirect()->route('projects.show')->with('info', 'Comment deleted successfully');
-        echo json_encode("success");
+
+        return ['msg'=>'success'];
     }
 
     /**

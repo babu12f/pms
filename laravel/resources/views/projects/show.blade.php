@@ -12,18 +12,20 @@
 
             <div class="cont">
                 <div class="row">
-                    <div class="col-md-3" style="border:1px solid #ccc;margin-left:5px;padding:10px;">
-                        <p>Due : {!! date_format(new DateTime($project->due_date), "D, m Y") !!}</p>
-                        <p>Status: {!! $project->project_status !!}</p>
-                        <p>Tasks: {{ count($tasks) }} </p>
-                        <p>Comments: {{ count($comments) }}</p>
-                        <p>Attachments: {{ count($files) }} </p>
-                        <p><a href="/projects/{{ $project->id }}/edit">Edit</a></p>
-                        <button class="btn btn-circle btn-danger delete"
-                                data-action="{{ url('projects/' . $project->id) }}"
-                                data-token="{{csrf_token()}}">
-                            <i class="fa fa-trash-o"></i>Delete
-                        </button>
+                    <div class="col-md-4">
+                        <div class="project">
+                            <p>Due : {!! date_format(new DateTime($project->due_date), "D, m Y") !!}</p>
+                            <p>Status: {!! $project->project_status !!}</p>
+                            <p>Tasks: {{ count($tasks) }} </p>
+                            <p>Comments: {{ count($comments) }}</p>
+                            <p>Attachments: {{ count($files) }} </p>
+                            <p><a href="/projects/{{ $project->id }}/edit">Edit</a></p>
+                            <button class="btn btn-circle btn-danger delete"
+                                    data-action="{{ url('projects/' . $project->id) }}"
+                                    data-token="{{csrf_token()}}">
+                                <i class="fa fa-trash-o"></i>Delete
+                            </button>
+                        </div>
                     </div>
                     @include('collaborators.form')
                 </div>

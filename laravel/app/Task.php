@@ -14,11 +14,6 @@ class Task extends Model
      */
     protected $fillable = ['task_name', 'project_id'];
 
-    public function scopeProject($query, $id)
-    {
-        return $query->where('project_id', $id);
-    }
-
     public function project()
     {
         return $this->belongsTo('App\Project');

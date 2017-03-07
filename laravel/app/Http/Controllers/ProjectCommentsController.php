@@ -76,7 +76,7 @@ class ProjectCommentsController extends Controller
             ->where('id', $commentId)
             ->delete();
 
-        return redirect()->route('projects.show')->with('info', 'Comment deleted successfully');
+        return ['msg'=>'success'];
     }
 
 }

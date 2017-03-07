@@ -14,11 +14,6 @@ class Comment extends Model
      */
     protected $fillable = ['comments', 'project_id', 'user_id'];
 
-    public function scopeProject($query, $id)
-    {
-        return $query->where('project_id', $id);
-    }
-
     /**
      * Get the user that is reponsible for a comment
      * @return collection
@@ -28,7 +23,7 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function projects()
+    public function project()
     {
         return $this->belongsTo('App\Project');
     }

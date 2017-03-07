@@ -3,6 +3,7 @@
         Tasks
     </h4>
     <div class="row" style="border:1px solid #ccc;margin-left:5px;width:100%;padding:15px;">
+
         @if( $tasks)
             @foreach( $tasks as $task)
                 <div>
@@ -17,7 +18,9 @@
                 <hr/>
             @endforeach
         @endif
+
         <form class="form-vertical" role="form" method="post" action="{{ route('projects.tasks.create', $project->id) }}">
+            {!! csrf_field() !!}
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <input type="text" name="task_name" class="form-control" id="name" value="{{ old('task_name') ?: '' }}">
                 @if ($errors->has('task_name'))
@@ -28,7 +31,7 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-info">Create Task</button>
             </div>
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
         </form>
     </div>
 </div>

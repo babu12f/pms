@@ -21,6 +21,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::personal()->get();
+
         return view('projects.index')->withProject($projects);
     }
 
@@ -58,7 +59,8 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('projects.index')->with('info','Your Project has been created successfully');
+        return redirect()->route('projects.index')
+                         ->with('info','Your Project has been created successfully');
     }
 
     /**
@@ -69,20 +71,11 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-
-//        $project       = Project::find($id);
-//        $tasks         = $project->tasks;
-//        $files         = $this->getFiles($id);
-//        $comments      = $this->getComments($id);
-        $collaborators = $this->getCollaborators($id);
-
         $project       = Project::find($id);
         $tasks         = $project->tasks;
         $files         = $project->files;
         $comments      = $project->comments;
-        //$collaborators = $project->collaborations;
-
-
+        $collaborators = $project->collaborations;
 
         return view('projects.show')
             ->withProject($project)
@@ -115,14 +108,18 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $this->validate($request, [
-            'project_name'     => 'required|min:3',
+            'name'     => 'required|min:3',
             'due-date' => 'required|date|after:today',
-            'project_notes'    => 'required|min:10',
-            'project_status'   => 'required'
+            'notes'    => 'required|min:10',
+            'status'   => 'required'
         ]);
 
-        $values = $request->all();
-        $project->fill($values)->save();
+        $project->project_name   = $request->input('name');
+        $project->project_status = $request->input('status');
+        $project->due_date       = $request->input('due-date');
+        $project->project_notes  = $request->input('notes');
+
+        $project->save();
 
         return redirect()->back()->with('info','Your Project has been updated successfully');
     }
@@ -138,46 +135,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $project->delete();
 
-        return redirect('Prego/projects')->with('info', 'Project deleted successfully');
-    }
-
-    /**
-     * Get all the tasks for a Project
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    public function getTasks($id)
-    {
-        //$tasks =  Task::project($id)->get();
-        //return $tasks;
-    }
-
-    public function getFiles($id)
-    {
-        $files =  File::project($id)->get();
-        return $files;
-    }
-
-    /**
-     * Get all the comments that were made on a Project
-     * @param  integer $id
-     * @return collection
-     */
-    public function getComments($id)
-    {
-        $comments = Comment::project($id)->get();
-        return $comments;
-    }
-
-    /**
-     * Get all the collaborators on this project
-     * @param  int $id
-     * @return collection
-     */
-    public function getCollaborators($id)
-    {
-        $collaborators = Collaboration::project($id)->get();
-        return $collaborators;
+        return ['msg'=>'success', 'redirect'=>'/Prego/projects'];
     }
 
 }

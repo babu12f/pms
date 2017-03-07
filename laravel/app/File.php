@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
-    public function scopeProject($query, $id)
-    {
-        return $query->where('project_id', $id);
-    }
-
-    public function projects()
+    public function project()
     {
         return $this->belongsTo('App\Project');
     }

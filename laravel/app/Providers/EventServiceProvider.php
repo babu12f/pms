@@ -32,20 +32,20 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
-        Collaboration::saved( function($collaboration)
-        {
-            $data = [
-                'username' => Auth::user()->username,
-                'project_name' => session('project_name')
-            ];
-            $subject = 'Call For Collaboration';
-            $user = session('user_email');
-
-            Mail::send('emails.collaborate', $data, function($message) use ($user, $subject){
-                $message->from('no-reply@prego.com', 'Prego');
-                $message->to($user)
-                    ->subject($subject);
-            });
-        });
+//        Collaboration::saved( function($collaboration)
+//        {
+//            $data = [
+//                'username' => Auth::user()->username,
+//                'project_name' => session('project_name')
+//            ];
+//            $subject = 'Call For Collaboration';
+//            $user = session('user_email');
+//
+//            Mail::send('emails.collaborate', $data, function($message) use ($user, $subject){
+//                $message->from('no-reply@prego.com', 'Prego');
+//                $message->to($user)
+//                    ->subject($subject);
+//            });
+//        });
     }
 }

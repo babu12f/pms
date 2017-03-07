@@ -34,7 +34,7 @@ class Project extends Model
         return $this->hasMany('App\Comment');
     }
 
-    public function colllaborations()
+    public function collaborations()
     {
         return $this->hasMany('App\Collaboration');
     }
