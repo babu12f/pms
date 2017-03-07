@@ -23,4 +23,20 @@ class Project extends Model
     {
         return $this->hasMany('App\task');
     }
+
+    public function files()
+    {
+        return $this->hasMany('App\File');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+    public function colllaborations()
+    {
+        return $this->hasMany('App\Collaboration');
+    }
+
 }

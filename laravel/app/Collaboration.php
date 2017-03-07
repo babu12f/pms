@@ -24,6 +24,11 @@ class Collaboration extends Model
         return $this->belongsTo(User::class, 'collaborator_id');
     }
 
+    public function projects()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
     /**
      * Query scope to return information about the current project
      * @param  $query

@@ -38,6 +38,11 @@ class ProjectCollaboratorsController extends Controller
         }
 
         $collaboration->collaborator_id  = $this->getId($collaborator_username);
+
+        session(['project_name' => $this->getProjectName($id),
+            'user_email' => $this->getEmail($collaborator_username)
+        ]);
+
         $collaboration->save();
 
         return redirect()->back()->with('info', "{$collaborator_username} has been added to your project successfully");
@@ -80,4 +85,25 @@ class ProjectCollaboratorsController extends Controller
         //return redirect()->route('projects.show')->with('info', 'Comment deleted successfully');
         echo json_encode("success");
     }
+
+    /**
+     * Get the email of a user for use in sending emails
+     * @param  string $username
+     * @return string
+     */
+    private function getEmail($username)
+    {
+        return User::where('username', $username)->first()->email;
+    }
+
+    /**
+     * Get the Project Name for use in sending email for Collaboration
+     * @param  int $id
+     * @return string
+     */
+    private function getProjectName($id)
+    {
+        return Project::where('id', $id)->first()->project_name;
+    }
+
 }

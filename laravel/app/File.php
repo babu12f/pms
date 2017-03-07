@@ -11,4 +11,11 @@ class File extends Model
     {
         return $query->where('project_id', $id);
     }
+
+    public function projects()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
+
 }
