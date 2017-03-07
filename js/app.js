@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $("button.delete").on('click', function(e){
         e.preventDefault();
         if ( ! confirm('Are you sure?')) {
@@ -8,7 +9,7 @@ $(document).ready(function() {
         var parent = $(this).parent();
         var token  = $(this).data("token");
 
-
+        //Ajax Method For Deletion
         $.ajax({
             type: 'POST',
             url: action,
@@ -16,11 +17,23 @@ $(document).ready(function() {
             error: function(msg) {
                 alert(msg.responseJSON[0]);
             },
-            success: function() {
-                window.location.href = '/projects';
-                //console.log(data);
+            success: function(data) {
+
+                if(data.redirect){
+                    window.location.href = data.redirect;
+                } else{
+                    parent.next().fadeOut(1000).remove();
+                    parent.fadeOut(1000).remove();
+                }
+
             }
         });
+
     });
+
+    setTimeout(function() {
+        $('.alert').fadeOut(1000);
+        $('.alert').remove();
+    }, 1000);
 
 });
