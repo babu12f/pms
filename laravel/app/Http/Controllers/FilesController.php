@@ -27,19 +27,17 @@ class FilesController extends Controller
         list($width, $height) = getimagesize($filename);
 
         $fileUrl = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
-        $this->saveUploads($request, $fileUrl, $id, Cloudder::getPublicId());
+        $this->saveUploads($request, $fileUrl, $id);
 
         return redirect()->back()->with('info', 'Your Attachment has been uploaded Successfully');
     }
 
-    private function saveUploads(Request $request, $fileUrl, $id, $publickey)
+    private function saveUploads(Request $request, $fileUrl, $id)
     {
         $file = new File;
         $file->file_name  = $request->file('file_name')->getClientOriginalName();
         $file->file_url   = $fileUrl;
         $file->project_id = $id;
-
-        $file->publickey = $publickey;
 
         $file->save();
     }
