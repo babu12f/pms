@@ -93,7 +93,7 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $project = Project::find($id);
+        $project = Project::findOrFail ( $id);
         return view('projects.edit')->withProject($project);
     }
 

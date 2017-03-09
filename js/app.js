@@ -19,6 +19,7 @@ $(document).ready(function() {
             },
             success: function(data) {
 
+                console.log(data);
                 if(data.redirect){
                     window.location.href = data.redirect;
                 } else{

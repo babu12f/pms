@@ -29,4 +29,11 @@ class Collaboration extends Model
         return $this->belongsTo('App\Project');
     }
 
+    public static function isCollaborator($projectId, $collaboratorId)
+    {
+        return Collaboration::where('project_id', $projectId)
+            ->where('collaborator_id', $collaboratorId)
+            ->first();
+    }
+
 }

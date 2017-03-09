@@ -7,14 +7,16 @@
         @if( $files)
             <?php $i=1; ?>
             @foreach( $files as $file)
-                <div>
-                    <div><i class="fa fa-check-square-o"></i>
-                        <span>
-                            <a href="{{ $file->file_url }}" target="_blank">File-{{ $i }}</a>
-                        </span>
+
+                    <div class="clearfix">
+                        <div><i class="fa fa-check-square-o"></i><span><a href="{{ $file->file_url }}" target="_blank">File-{{ $i }}</a></span></div>
+                        <button id="task" class="btn btn-danger delete pull-right"
+                                data-action="/Prego/projects/{{ $project->id   }}/files/{{ $file->id  }}"
+                                data-token="{{csrf_token()}}">
+                            <i class="fa fa-trash-o"></i>Delete
+                        </button>
                     </div>
-                </div>
-                <hr/>
+                    <hr/>
                 <?php $i++; ?>
             @endforeach
         @endif

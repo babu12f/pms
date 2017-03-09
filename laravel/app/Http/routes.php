@@ -61,6 +61,10 @@ Route::post('projects/{projects}/files', [
     'middleware' => ['auth']
 ]);
 
+Route::delete('projects/{projects}/files/{files}', [
+    'uses' => 'FilesController@deleteOneProjectFile',
+]);
+
 # Comment routes
 Route::post('projects/{projects}/comments', [
     'uses' => 'ProjectCommentsController@postNewComment',

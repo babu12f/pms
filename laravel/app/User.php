@@ -27,5 +27,9 @@ class User extends Authenticatable
         return "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->email))) . "?d=mm&s=40";
     }
 
+    public static function getCollaborator($username)
+    {
+        return User::where('username', $username)->first();
+    }
 
 }

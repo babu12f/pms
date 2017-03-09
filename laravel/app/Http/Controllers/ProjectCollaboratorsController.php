@@ -20,57 +20,46 @@ class ProjectCollaboratorsController extends Controller
      */
     public function addCollaborator(Request $request, $id, Collaboration $collaboration)
     {
+        //Validate Input Colaborator Username
         $this->validate($request, [
             'collaborator'     => 'required|min:5',
         ]);
 
+        /*
+         *  Extrect Collaborator Username From Input
+         *  Input @usernarm Remove '@' from input
+         *
+         * */
         $collaborator_username           = substr(trim($request->input('collaborator')),1);
-        $collaboration->project_id       = $id;
-        if( is_null($this->getId($collaborator_username)))
+
+        //Find User For Collabortor
+        $collaborator = User::getCollaborator( $collaborator_username );
+
+        if( !$collaborator )
         {
             return redirect()->back()->with('warning', 'This user does not exist');
         }
 
-        $collaborator = $this->isCollaborator($id, $this->getId($collaborator_username));
-        if(! is_null($collaborator))
+        //Check If User Allredy Collaborate This project
+        $collaborate = Collaboration::isCollaborator($id, $collaborator->id);
+        if( $collaborate )
         {
             return redirect()->back()->with('warning', 'This user is already a collaborator on this project');
         }
 
-        $collaboration->collaborator_id  = $this->getId($collaborator_username);
-
+        //Store Collaborator To Session Sending Email To Collabrator
         session(['project_name' => $this->getProjectName($id),
-            'user_email' => $this->getEmail($collaborator_username)
+            'user_email' => $collaborator->email
         ]);
 
+        //Add Apropiat Data To Collaboration
+        $collaboration->collaborator_id  = $collaborator->id;
+        $collaboration->project_id       = $id;
+
+        //Save The Collaboration
         $collaboration->save();
 
         return redirect()->back()->with('info', "{$collaborator_username} has been added to your project successfully");
-    }
-
-    /**
-     * Get id of the user
-     * @param  string $username
-     * @return mixed  null | integer
-     */
-    private function getId($username)
-    {
-        $result = User::where('username', $username)->first();
-
-        return (is_null($result)) ? null : $result->id;
-    }
-
-    /**
-     * Check if the user about to be added as a collaborator is already one on the project
-     * @param  int  $projectId
-     * @param  int  $collaboratorId
-     * @return boolean
-     */
-    private function isCollaborator($projectId, $collaboratorId)
-    {
-        return Collaboration::where('project_id', $projectId)
-            ->where('collaborator_id', $collaboratorId)
-            ->first();
     }
 
     public function deleteCollaborator($projectId, $collaborationId)
@@ -83,16 +72,6 @@ class ProjectCollaboratorsController extends Controller
         //return redirect()->route('projects.show')->with('info', 'Comment deleted successfully');
 
         return ['msg'=>'success'];
-    }
-
-    /**
-     * Get the email of a user for use in sending emails
-     * @param  string $username
-     * @return string
-     */
-    private function getEmail($username)
-    {
-        return User::where('username', $username)->first()->email;
     }
 
     /**
