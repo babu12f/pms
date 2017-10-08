@@ -22,9 +22,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getAvatarUrl()
+    public function getAvatarUrl($size=40)
     {
-        return "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->email))) . "?d=mm&s=40";
+        return "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->email))) . "?d=mm&s={$size}";
     }
 
     public static function getCollaborator($username)
