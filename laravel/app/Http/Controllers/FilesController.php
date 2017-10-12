@@ -11,9 +11,13 @@ use App\Http\Requests;
 class FilesController extends Controller
 {
     /**
-     * Displays the index page of the app
+     * Upload File To Cloudder Cloude Storage
+     * Save file name, clude url, and project_id to database
      *
-     * @return Response
+     * @param [Request] $request [Form Submited Data]
+     * @param [Project_id] $id [The Project Id]
+     *
+     * @return Reditect to from with a message
      */
     public function uploadAttachments(Request $request, $id)
     {
@@ -32,6 +36,16 @@ class FilesController extends Controller
         return redirect()->back()->with('info', 'Your Attachment has been uploaded Successfully');
     }
 
+
+    /**
+     * Save File Information In Database
+     *
+     * @param [Request] $requeat [Requested Form]
+     * @param [File clude url] $fileUrl [File Clude Url]
+     * @param [Pjoject Id] $id
+     *
+     * @return sNothin to reutrn
+     */
     private function saveUploads(Request $request, $fileUrl, $id)
     {
         $file = new File;
@@ -43,10 +57,13 @@ class FilesController extends Controller
     }
 
     /**
-     * Delete One Project File
-     * @param  [type] $projectId [description]
-     * @param  [type] $fileId    [description]
-     * @return [type]            [description]
+     * Delete One Project File From Database and
+     * From Clude Storage
+     *
+     * @param  [Int] $projectId [Project Id]
+     * @param  [Int] $fileId    [File Id]
+     *
+     * @return [Array]            [success messsage]
      */
     public function deleteOneProjectFile($projectId, $fileId)
     {

@@ -20,6 +20,10 @@ Route::get('/auth/signin', [
     'middleware' => ['guest']
 ]);
 
+// Route::get('auth/signin', function(){
+//     dd('found');
+// });
+
 Route::post('/auth/signin', [
     'uses' => 'AuthController@postLogIn',
     'middleware' => ['guest']
@@ -100,3 +104,8 @@ Route::get('/', [
     'uses' => 'HomeController@index',
     'as'=>'index'
 ]);
+
+
+Route::get('nadim', function(){
+    dd('babor');
+});

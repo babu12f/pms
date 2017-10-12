@@ -17,7 +17,6 @@ class AuthController extends Controller
 
     public function getLogin()
     {
-        //dd('babor');
         return view('auth.login');
     }
 

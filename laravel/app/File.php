@@ -11,6 +11,4 @@ class File extends Model
     {
         return $this->belongsTo('App\Project');
     }
-
-
 }
