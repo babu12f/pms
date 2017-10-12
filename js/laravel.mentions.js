@@ -6,7 +6,7 @@ function enableMentions(elem, type, column) {
             remoteFilter: function(query, callback) {
                 if (query.length <= 1) return;
 
-                $.getJSON("/Prego/api/mentions/" + type, {
+                $.getJSON("/prego/api/mentions/" + type, {
                     q: query,
                     c: column
                 }, function(data) {
